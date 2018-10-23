@@ -4,7 +4,7 @@ const sgMail = require("@sendgrid/mail");
 const { createShortLivedToken, createLongLivedToken } = require("../../utils");
 
 const auth = {
-  async signup(parent, { shortLivedToken, name }, ctx, info) {
+  async signup(parent, { shortLivedToken }, ctx, info) {
     const [user] = await ctx.db.query.users({
       where: {
         shortLivedToken
@@ -13,13 +13,16 @@ const auth = {
 
     const longLivedToken = await createLongLivedToken(shortLivedToken);
 
-    if (!user || !longLivedToken) {
+    if (!user) {
+      throw new Error(`No user found`);
+    }
+    if (!longLivedToken) {
       throw new Error(`This token is expired or invalid`);
     }
 
     const updatedUser = await ctx.db.mutation.updateUser({
       where: { email: user.email },
-      data: { shortLivedToken: null, name }
+      data: { shortLivedToken: null }
     });
 
     return {

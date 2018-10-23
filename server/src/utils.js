@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const uuid = require("uuid/v4");
+// const uuid = require("uuid/v4");
 // const jsonwebtoken = require("jsonwebtoken");
 // const { sendMail } = require("../email");
 
@@ -20,18 +20,17 @@ class AuthError extends Error {
   }
 }
 
-const createShortLivedToken = ({ email, id }) => {
-  return jwt.sign({ id, email }, process.env.APP_SECRET, {
-    expiresIn: "10m"
+const createShortLivedToken = ({ id }) => {
+  return jwt.sign({ id }, process.env.APP_SECRET, {
+    expiresIn: "1h"
   });
 };
 
 const createLongLivedToken = token => {
-  const { id, email } = jwt.verify(token, process.env.APP_SECRET);
-  const longLivedToken = jwt.sign({ userId: id }, process.env.APP_SECRET, {
+  const { id } = jwt.verify(token, process.env.APP_SECRET);
+  return jwt.sign({ userId: id }, process.env.APP_SECRET, {
     expiresIn: "30 days"
   });
-  return longLivedToken;
 };
 
 // const verify = token => {
