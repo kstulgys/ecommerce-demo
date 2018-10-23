@@ -26,19 +26,21 @@ const createShortLivedToken = ({ email, id }) => {
   });
 };
 
-const createLongLivedToken = ({ id }) => {
-  try {
-    // const { id, email } = jwt.verify(token, process.env.APP_SECRET);
-    const longLivedToken = jwt.sign({ userId: id }, process.env.APP_SECRET, {
-      expiresIn: "30 days"
-    });
-    return longLivedToken;
-    // return Promise.resolve(longLivedToken);
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+const createLongLivedToken = token => {
+  const { id, email } = jwt.verify(token, process.env.APP_SECRET);
+  const longLivedToken = jwt.sign({ userId: id }, process.env.APP_SECRET, {
+    expiresIn: "30 days"
+  });
+  return longLivedToken;
 };
+
+// const verify = token => {
+//   try {
+//     return jwt.verify(token, process.env.APP_SECRET);
+//   } catch (error) {
+//     throw new Error("Unauthorized");
+//   }
+// };
 
 // const sendShortLivedToken = (email, token) => {
 //   return sendMail({
@@ -50,14 +52,6 @@ const createLongLivedToken = ({ id }) => {
 //     }/verify?token=${token}" target="_blank">Authenticate</a>`,
 //     subject: "Auth token"
 //   });
-// };
-
-// const verify = token => {
-//   try {
-//     return jwt.verify(token, process.env.APP_SECRET);
-//   } catch (error) {
-//     throw new Error("Unauthorized");
-//   }
 // };
 
 // const authorize = async (database, token) => {

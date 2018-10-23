@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/karolis-stulgys-9eb3b5/ecommerce-demo-database/dev
-# timestamp: Mon Oct 22 2018 14:55:21 GMT+1100 (AUS Eastern Daylight Time)
+# timestamp: Tue Oct 23 2018 10:23:41 GMT+1100 (AUS Eastern Daylight Time)
 
 type AggregatePost {
   count: Int!
@@ -416,7 +416,6 @@ type User implements Node {
   email: String!
   name: String!
   shortLivedToken: String
-  longLivedToken: String
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post!]
 }
 
@@ -432,9 +431,8 @@ type UserConnection {
 
 input UserCreateInput {
   email: String!
-  name: String!
+  name: String
   shortLivedToken: String
-  longLivedToken: String
   posts: PostCreateManyWithoutAuthorInput
 }
 
@@ -445,9 +443,8 @@ input UserCreateOneWithoutPostsInput {
 
 input UserCreateWithoutPostsInput {
   email: String!
-  name: String!
+  name: String
   shortLivedToken: String
-  longLivedToken: String
 }
 
 """An edge in a connection."""
@@ -468,8 +465,6 @@ enum UserOrderByInput {
   name_DESC
   shortLivedToken_ASC
   shortLivedToken_DESC
-  longLivedToken_ASC
-  longLivedToken_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -481,7 +476,6 @@ type UserPreviousValues {
   email: String!
   name: String!
   shortLivedToken: String
-  longLivedToken: String
 }
 
 type UserSubscriptionPayload {
@@ -527,7 +521,6 @@ input UserUpdateInput {
   email: String
   name: String
   shortLivedToken: String
-  longLivedToken: String
   posts: PostUpdateManyWithoutAuthorInput
 }
 
@@ -542,7 +535,6 @@ input UserUpdateWithoutPostsDataInput {
   email: String
   name: String
   shortLivedToken: String
-  longLivedToken: String
 }
 
 input UserUpsertWithoutPostsInput {
@@ -719,46 +711,6 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   shortLivedToken_not_ends_with: String
-  longLivedToken: String
-
-  """All values that are not equal to given value."""
-  longLivedToken_not: String
-
-  """All values that are contained in given list."""
-  longLivedToken_in: [String!]
-
-  """All values that are not contained in given list."""
-  longLivedToken_not_in: [String!]
-
-  """All values less than the given value."""
-  longLivedToken_lt: String
-
-  """All values less than or equal the given value."""
-  longLivedToken_lte: String
-
-  """All values greater than the given value."""
-  longLivedToken_gt: String
-
-  """All values greater than or equal the given value."""
-  longLivedToken_gte: String
-
-  """All values containing the given string."""
-  longLivedToken_contains: String
-
-  """All values not containing the given string."""
-  longLivedToken_not_contains: String
-
-  """All values starting with the given string."""
-  longLivedToken_starts_with: String
-
-  """All values not starting with the given string."""
-  longLivedToken_not_starts_with: String
-
-  """All values ending with the given string."""
-  longLivedToken_ends_with: String
-
-  """All values not ending with the given string."""
-  longLivedToken_not_ends_with: String
   posts_every: PostWhereInput
   posts_some: PostWhereInput
   posts_none: PostWhereInput

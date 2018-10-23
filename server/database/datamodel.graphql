@@ -11,7 +11,7 @@ type Post {
 type User {
   id: ID! @unique
   email: String! @unique
-  name: String!
+  name: String! @default(value: "User")
   shortLivedToken: String
   posts: [Post!]!
 }
