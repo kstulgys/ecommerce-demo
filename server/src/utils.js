@@ -11,14 +11,15 @@ function getUserId(ctx) {
     return userId;
   }
 
-  throw new AuthError();
+  // throw new Error(`Not authorized`);
+  return null;
 }
 
-class AuthError extends Error {
-  constructor() {
-    super("Not authorized");
-  }
-}
+// class AuthError extends Error {
+//   constructor() {
+//     super("Not authorized");
+//   }
+// }
 
 const createShortLivedToken = ({ id }) => {
   return jwt.sign({ id }, process.env.APP_SECRET, {
@@ -69,8 +70,7 @@ const createLongLivedToken = token => {
 module.exports = {
   createShortLivedToken,
   createLongLivedToken,
-  getUserId,
-  AuthError
+  getUserId
   // sendShortLivedToken,
   // verify,
   // authorize,

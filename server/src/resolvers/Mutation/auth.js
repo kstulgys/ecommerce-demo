@@ -12,13 +12,16 @@ const auth = {
     });
 
     const longLivedToken = await createLongLivedToken(shortLivedToken);
+    if (!user || !longLivedToken) {
+      throw new Error(`Token is expired or invalid`);
+    }
 
-    if (!user) {
-      throw new Error(`No user found`);
-    }
-    if (!longLivedToken) {
-      throw new Error(`This token is expired or invalid`);
-    }
+    // if (!user) {
+    //   throw new Error(`No user found`);
+    // }
+    // if (!longLivedToken) {
+    //   throw new Error(`This token is expired or invalid`);
+    // }
 
     const updatedUser = await ctx.db.mutation.updateUser({
       where: { email: user.email },
