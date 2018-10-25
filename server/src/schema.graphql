@@ -1,24 +1,57 @@
-# import Post from "./generated/prisma.graphql"
+# import * from './generated/prisma.graphql'
 
 type Query {
-  feed: [Post!]!
-  drafts: [Post!]!
-  post(id: ID!): Post
+  # infiniteScrollItems(pageNum: Int!, pageSize: Int!): ItemsPage
+  items(
+    where: ItemWhereInput
+    orderBy: ItemOrderByInput
+    skip: Int
+    first: Int
+  ): [Item]!
+  item(where: ItemWhereUniqueInput!): Item
+  itemsConnection(
+    where: ItemWhereInput
+    orderBy: ItemOrderByInput
+    skip: Int
+    first: Int
+    after: String
+  ): ItemConnection!
+  users: [User]!
+  order(id: ID!): Order
+  orders(orderBy: OrderOrderByInput): [Order]!
   me: User
 }
 
+type ItemsPage {
+  items: [Item]
+  hasMore: Boolean
+}
+
 type Mutation {
+  sendShortLivedToken(email: String!): SuccessMessage
+  signup(shortLivedToken: String!): AuthPayload
+  signout: SuccessMessage
+  createItem(
+    title: String
+    description: String
+    price: Int
+    image: String
+    largeImage: String
+  ): Item!
+  updateItem(id: ID!, title: String, description: String, price: Int): Item!
+  deleteItem(id: ID!): Item
+  addToCart(id: ID!): CartItem
+  removeFromCart(id: ID!): CartItem
+  createOrder(token: String!): Order!
   # signup(email: String!, password: String!, name: String!): AuthPayload!
   # login(email: String!, password: String!): AuthPayload!
-  signup(shortLivedToken: String!): AuthPayload
-  createDraft(title: String!, text: String!): Post!
-  publish(id: ID!): Post!
-  deletePost(id: ID!): Post!
-  sendShortLivedToken(email: String!): SuccessMessage
+  # createDraft(title: String!, text: String!): Post!
+  # publish(id: ID!): Post!
+  # deletePost(id: ID!): Post!
 }
 
 type Subscription {
-  feedSubscription: PostSubscriptionPayload!
+  feedSubscription: ItemSubscriptionPayload!
 }
 
 type AuthPayload {
@@ -29,9 +62,10 @@ type AuthPayload {
 type User {
   id: ID!
   email: String!
-  name: String
-  posts: [Post!]!
+  cart: [CartItem!]!
+  orders: [OrderItem!]!
 }
+
 type SuccessMessage {
   message: String
 }

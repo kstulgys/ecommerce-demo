@@ -1,7 +1,4 @@
 const jwt = require("jsonwebtoken");
-// const uuid = require("uuid/v4");
-// const jsonwebtoken = require("jsonwebtoken");
-// const { sendMail } = require("../email");
 
 function getUserId(ctx) {
   const Authorization = ctx.request.get("Authorization");
@@ -32,6 +29,12 @@ const createLongLivedToken = token => {
   return jwt.sign({ userId: id }, process.env.APP_SECRET, {
     expiresIn: "30 days"
   });
+};
+
+module.exports = {
+  createShortLivedToken,
+  createLongLivedToken,
+  getUserId
 };
 
 // const verify = token => {
@@ -66,13 +69,3 @@ const createLongLivedToken = token => {
 //   const id = uuid();
 //   return { id, email };
 // };
-
-module.exports = {
-  createShortLivedToken,
-  createLongLivedToken,
-  getUserId
-  // sendShortLivedToken,
-  // verify,
-  // authorize,
-  // createUser,
-};

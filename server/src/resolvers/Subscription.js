@@ -1,18 +1,18 @@
 const Subscription = {
   feedSubscription: {
     subscribe: (parent, args, ctx, info) => {
-      return ctx.db.subscription.post(
+      return ctx.db.subscription.item(
         {
           where: {
             node: {
-              isPublished: true,
-            },
-          },
+              isPublished: true
+            }
+          }
         },
-        info,
-      )
-    },
-  },
-}
+        info
+      );
+    }
+  }
+};
 
-module.exports = { Subscription }
+module.exports = { Subscription };

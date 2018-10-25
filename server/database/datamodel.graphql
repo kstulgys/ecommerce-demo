@@ -1,17 +1,48 @@
-type Post {
-  id: ID! @unique
+type Item {
   createdAt: DateTime!
   updatedAt: DateTime!
-  isPublished: Boolean! @default(value: "false")
+  id: ID! @unique
   title: String!
-  text: String!
-  author: User!
+  description: String!
+  image: String
+  largeImage: String
+  price: Int!
+  user: User!
+}
+
+type CartItem {
+  id: ID! @unique
+  quantity: Int! @default(value: 1)
+  item: Item # relationship to Item
+  user: User! # relationship to User
+}
+
+type OrderItem {
+  id: ID! @unique
+  title: String!
+  description: String!
+  image: String!
+  largeImage: String!
+  price: Int!
+  quantity: Int! @default(value: 1)
+  user: User
+}
+
+type Order {
+  id: ID! @unique
+  items: [OrderItem!]!
+  total: Int!
+  user: User!
+  charge: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type User {
   id: ID! @unique
   email: String! @unique
-  name: String! @default(value: "User")
   shortLivedToken: String
-  posts: [Post!]!
+  cart: [CartItem!]!
+  orders: [OrderItem!]!
 }
+# name: String! @default(value: "User")
