@@ -44,5 +44,6 @@ type User {
   shortLivedToken: String
   cart: [CartItem!]!
   orders: [OrderItem!]!
+  items: [Item!]!
 }
 # name: String! @default(value: "User")

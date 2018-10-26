@@ -64,6 +64,7 @@ type User {
   email: String!
   cart: [CartItem!]!
   orders: [OrderItem!]!
+  items: [Item!]!
 }
 
 type SuccessMessage {

@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/karolis-stulgys-9eb3b5/ecommerce-demo-database/dev
-# timestamp: Thu Oct 25 2018 15:38:52 GMT+1100 (AUS Eastern Daylight Time)
+# timestamp: Fri Oct 26 2018 10:56:51 GMT+1100 (AUS Eastern Daylight Time)
 
 type AggregateCartItem {
   count: Int!
@@ -127,6 +127,10 @@ input CartItemUpdateInput {
   quantity: Int
   item: ItemUpdateOneInput
   user: UserUpdateOneRequiredWithoutCartInput
+}
+
+input CartItemUpdateManyInput {
+  quantity: Int
 }
 
 input CartItemUpdateManyWithoutUserInput {
@@ -263,12 +267,25 @@ input ItemCreateInput {
   image: String
   largeImage: String
   price: Int!
-  user: UserCreateOneInput!
+  user: UserCreateOneWithoutItemsInput!
+}
+
+input ItemCreateManyWithoutUserInput {
+  create: [ItemCreateWithoutUserInput!]
+  connect: [ItemWhereUniqueInput!]
 }
 
 input ItemCreateOneInput {
   create: ItemCreateInput
   connect: ItemWhereUniqueInput
+}
+
+input ItemCreateWithoutUserInput {
+  title: String!
+  description: String!
+  image: String
+  largeImage: String
+  price: Int!
 }
 
 """An edge in a connection."""
@@ -355,7 +372,7 @@ input ItemUpdateDataInput {
   image: String
   largeImage: String
   price: Int
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutItemsInput
 }
 
 input ItemUpdateInput {
@@ -364,7 +381,24 @@ input ItemUpdateInput {
   image: String
   largeImage: String
   price: Int
-  user: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutItemsInput
+}
+
+input ItemUpdateManyInput {
+  title: String
+  description: String
+  image: String
+  largeImage: String
+  price: Int
+}
+
+input ItemUpdateManyWithoutUserInput {
+  create: [ItemCreateWithoutUserInput!]
+  connect: [ItemWhereUniqueInput!]
+  disconnect: [ItemWhereUniqueInput!]
+  delete: [ItemWhereUniqueInput!]
+  update: [ItemUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ItemUpsertWithWhereUniqueWithoutUserInput!]
 }
 
 input ItemUpdateOneInput {
@@ -376,9 +410,28 @@ input ItemUpdateOneInput {
   upsert: ItemUpsertNestedInput
 }
 
+input ItemUpdateWithoutUserDataInput {
+  title: String
+  description: String
+  image: String
+  largeImage: String
+  price: Int
+}
+
+input ItemUpdateWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput!
+  data: ItemUpdateWithoutUserDataInput!
+}
+
 input ItemUpsertNestedInput {
   update: ItemUpdateDataInput!
   create: ItemCreateInput!
+}
+
+input ItemUpsertWithWhereUniqueWithoutUserInput {
+  where: ItemWhereUniqueInput!
+  update: ItemUpdateWithoutUserDataInput!
+  create: ItemCreateWithoutUserInput!
 }
 
 input ItemWhereInput {
@@ -690,11 +743,11 @@ type Mutation {
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
   upsertOrderItem(where: OrderItemWhereUniqueInput!, create: OrderItemCreateInput!, update: OrderItemUpdateInput!): OrderItem!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyCartItems(data: CartItemUpdateInput!, where: CartItemWhereInput): BatchPayload!
-  updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput): BatchPayload!
-  updateManyItems(data: ItemUpdateInput!, where: ItemWhereInput): BatchPayload!
-  updateManyOrderItems(data: OrderItemUpdateInput!, where: OrderItemWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyCartItems(data: CartItemUpdateManyInput!, where: CartItemWhereInput): BatchPayload!
+  updateManyOrders(data: OrderUpdateManyInput!, where: OrderWhereInput): BatchPayload!
+  updateManyItems(data: ItemUpdateManyInput!, where: ItemWhereInput): BatchPayload!
+  updateManyOrderItems(data: OrderItemUpdateManyInput!, where: OrderItemWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyInput!, where: UserWhereInput): BatchPayload!
   deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
   deleteManyOrders(where: OrderWhereInput): BatchPayload!
   deleteManyItems(where: ItemWhereInput): BatchPayload!
@@ -1275,6 +1328,11 @@ input OrderUpdateInput {
   user: UserUpdateOneRequiredInput
 }
 
+input OrderUpdateManyInput {
+  total: Int
+  charge: String
+}
+
 input OrderWhereInput {
   """Logical AND on all given filters."""
   AND: [OrderWhereInput!]
@@ -1493,6 +1551,7 @@ type User implements Node {
   shortLivedToken: String
   cart(where: CartItemWhereInput, orderBy: CartItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CartItem!]
   orders(where: OrderItemWhereInput, orderBy: OrderItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderItem!]
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item!]
 }
 
 """A connection to a list of items."""
@@ -1510,6 +1569,7 @@ input UserCreateInput {
   shortLivedToken: String
   cart: CartItemCreateManyWithoutUserInput
   orders: OrderItemCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
 }
 
 input UserCreateOneInput {
@@ -1522,6 +1582,11 @@ input UserCreateOneWithoutCartInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutItemsInput {
+  create: UserCreateWithoutItemsInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreateOneWithoutOrdersInput {
   create: UserCreateWithoutOrdersInput
   connect: UserWhereUniqueInput
@@ -1531,12 +1596,21 @@ input UserCreateWithoutCartInput {
   email: String!
   shortLivedToken: String
   orders: OrderItemCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutItemsInput {
+  email: String!
+  shortLivedToken: String
+  cart: CartItemCreateManyWithoutUserInput
+  orders: OrderItemCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutOrdersInput {
   email: String!
   shortLivedToken: String
   cart: CartItemCreateManyWithoutUserInput
+  items: ItemCreateManyWithoutUserInput
 }
 
 """An edge in a connection."""
@@ -1611,6 +1685,7 @@ input UserUpdateDataInput {
   shortLivedToken: String
   cart: CartItemUpdateManyWithoutUserInput
   orders: OrderItemUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -1618,6 +1693,12 @@ input UserUpdateInput {
   shortLivedToken: String
   cart: CartItemUpdateManyWithoutUserInput
   orders: OrderItemUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
+}
+
+input UserUpdateManyInput {
+  email: String
+  shortLivedToken: String
 }
 
 input UserUpdateOneRequiredInput {
@@ -1634,6 +1715,13 @@ input UserUpdateOneRequiredWithoutCartInput {
   upsert: UserUpsertWithoutCartInput
 }
 
+input UserUpdateOneRequiredWithoutItemsInput {
+  create: UserCreateWithoutItemsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutItemsDataInput
+  upsert: UserUpsertWithoutItemsInput
+}
+
 input UserUpdateOneWithoutOrdersInput {
   create: UserCreateWithoutOrdersInput
   connect: UserWhereUniqueInput
@@ -1647,12 +1735,21 @@ input UserUpdateWithoutCartDataInput {
   email: String
   shortLivedToken: String
   orders: OrderItemUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutItemsDataInput {
+  email: String
+  shortLivedToken: String
+  cart: CartItemUpdateManyWithoutUserInput
+  orders: OrderItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateWithoutOrdersDataInput {
   email: String
   shortLivedToken: String
   cart: CartItemUpdateManyWithoutUserInput
+  items: ItemUpdateManyWithoutUserInput
 }
 
 input UserUpsertNestedInput {
@@ -1663,6 +1760,11 @@ input UserUpsertNestedInput {
 input UserUpsertWithoutCartInput {
   update: UserUpdateWithoutCartDataInput!
   create: UserCreateWithoutCartInput!
+}
+
+input UserUpsertWithoutItemsInput {
+  update: UserUpdateWithoutItemsDataInput!
+  create: UserCreateWithoutItemsInput!
 }
 
 input UserUpsertWithoutOrdersInput {
@@ -1805,6 +1907,9 @@ input UserWhereInput {
   orders_every: OrderItemWhereInput
   orders_some: OrderItemWhereInput
   orders_none: OrderItemWhereInput
+  items_every: ItemWhereInput
+  items_some: ItemWhereInput
+  items_none: ItemWhereInput
 }
 
 input UserWhereUniqueInput {
