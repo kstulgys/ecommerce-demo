@@ -10,6 +10,42 @@ const Query = {
     const id = getUserId(ctx);
     if (!id) return null;
     return ctx.db.query.user({ where: { id } }, info);
+  },
+  async order(parent, args, ctx, info) {
+    // 1. Make sure they are logged in
+    const userId = getUserId(ctx);
+    if (!userId)
+      throw new Error("You must be signed in to complete this order.");
+    // 2. Query the current order
+    const order = await ctx.db.query.order(
+      {
+        where: { id: args.id }
+      },
+      info
+    );
+    // 3. Check if the have the permissions to see this order
+    // const ownsOrder = order.user.id === ctx.request.userId;
+    // const hasPermissionToSeeOrder = ctx.request.user.permissions.includes(
+    //   "ADMIN"
+    // );
+    // if (!ownsOrder || !hasPermission) {
+    //   throw new Error("You cant see this buddd");
+    // }
+    // 4. Return the order
+    return order;
+  },
+  async orders(parent, args, ctx, info) {
+    const userId = getUserId(ctx);
+    if (!userId)
+      throw new Error("You must be signed in to complete this order.");
+    return ctx.db.query.orders(
+      {
+        where: {
+          user: { id: userId }
+        }
+      },
+      info
+    );
   }
 
   //   async infiniteScrollItems(

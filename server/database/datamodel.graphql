@@ -12,7 +12,7 @@ type Item {
 
 type CartItem {
   id: ID! @unique
-  quantity: Int! @default(value: 1)
+  quantity: Int! @default(value: "1")
   item: Item # relationship to Item
   user: User! # relationship to User
 }
@@ -24,7 +24,7 @@ type OrderItem {
   image: String!
   largeImage: String!
   price: Int!
-  quantity: Int! @default(value: 1)
+  quantity: Int! @default(value: "1")
   user: User
 }
 
