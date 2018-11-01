@@ -37,24 +37,20 @@ const item = {
     // return item;
   },
 
-  // async publish(parent, { id }, ctx, info) {
-  //   const userId = getUserId(ctx);
-  //   const postExists = await ctx.db.exists.Post({
-  //     id,
-  //     author: { id: userId }
-  //   });
-  //   if (!postExists) {
-  //     throw new Error(`Post not found or you're not the author`);
-  //   }
+  async updateItem(parent, args, ctx, info) {
+    const updates = { ...args };
+    delete updates.id;
 
-  //   return ctx.db.mutation.updatePost(
-  //     {
-  //       where: { id },
-  //       data: { isPublished: true }
-  //     },
-  //     info
-  //   );
-  // },
+    return ctx.db.mutation.updateItem(
+      {
+        where: { id: args.id },
+        data: {
+          ...updates
+        }
+      },
+      info
+    );
+  },
 
   async deleteItem(parent, { id }, ctx, info) {
     const userId = getUserId(ctx);

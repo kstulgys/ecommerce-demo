@@ -43,11 +43,6 @@ type Mutation {
   addToCart(id: ID!): CartItem
   removeFromCart(id: ID!): CartItem
   createOrder(token: String!): Order!
-  # signup(email: String!, password: String!, name: String!): AuthPayload!
-  # login(email: String!, password: String!): AuthPayload!
-  # createDraft(title: String!, text: String!): Post!
-  # publish(id: ID!): Post!
-  # deletePost(id: ID!): Post!
 }
 
 type Subscription {
