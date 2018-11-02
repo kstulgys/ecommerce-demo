@@ -19,7 +19,6 @@
     "react": "16.7.0-alpha.0 - next",
     "react-apollo": "2.2.4",
     "react-dom": "16.7.0-alpha.0 - next",
-    "react-infinite-scroller": "1.2.2",
     "react-pose": "3.3.7",
     "react-router-dom": "4.3.1",
     "react-scripts": "2.0.3",
@@ -27,11 +26,18 @@
     "subscriptions-transport-ws": "0.9.15",
     "tachyons": "4.11.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "*",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "jest": "^23.6.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest --watch",
     "eject": "react-scripts eject"
   },
   "browserslist": [
