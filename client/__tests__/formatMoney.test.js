@@ -1,5 +1,5 @@
 import formatMoney from '../src/utils/formatMoney'
-// const formatMoney = require('../src/utils/formatMoney')
+// const formatMoney = require('./src/utils/formatMoney')
 
 describe('format money function', () => {
   it('works with fractional dollars', () => {
@@ -12,8 +12,8 @@ describe('format money function', () => {
     expect(formatMoney(100)).toEqual('$1')
   })
 
-  //   it('formats fractional numbers', () => {
-  //     expect(formatMoney(5025)).toEqual('$50.25')
-  //     expect(formatMoney(1009)).toEqual('$1.09')
-  //   })
+  it('formats fractional numbers', () => {
+    expect(formatMoney(5025)).toEqual('$50.25')
+    expect(formatMoney(109)).toEqual('$1.09')
+  })
 })

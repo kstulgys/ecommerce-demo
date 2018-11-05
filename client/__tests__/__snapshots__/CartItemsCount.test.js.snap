@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CartItemsCount/> matches the snapshot 1`] = `
+<Component
+  key="11"
+  pose="exit"
+>
+  <Pill
+    backgroundColor="#D9822B"
+    display="inline-flex"
+    isSolid={true}
+    marginLeft={8}
+  >
+    11
+  </Pill>
+</Component>
+`;
+
+exports[`<CartItemsCount/> updates via props 1`] = `
+<Component
+  key="50"
+  pose="exit"
+>
+  <Pill
+    backgroundColor="#D9822B"
+    display="inline-flex"
+    isSolid={true}
+    marginLeft={8}
+  >
+    50
+  </Pill>
+</Component>
+`;
+
+exports[`<CartItemsCount/> updates via props 2`] = `
+<Component
+  key="10"
+  pose="enter"
+>
+  <Pill
+    backgroundColor="#D9822B"
+    display="inline-flex"
+    isSolid={true}
+    marginLeft={8}
+  >
+    10
+  </Pill>
+</Component>
+`;

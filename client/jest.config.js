@@ -1,4 +1,8 @@
-const { defaults } = require('jest-config')
 module.exports = {
-  setupFiles: ['<rootDir>src/__test__/setup.js'],
+  roots: ['./__tests__'],
+  transform: {
+    '^.+\\.js?$': 'babel-jest',
+  },
+
+  setupFiles: ['./enzyme'],
 }
