@@ -70,3 +70,5 @@ module.exports = {
 //   return { id, email };
 // };
 // "start": "nodemon -e js,graphql -x node -r dotenv/config src/index.js",
+// "heroku-postbuild": "npm install --only=dev --no-shrinkwrap && npm run build"
+//
