@@ -1,19 +1,20 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const sgMail = require("@sendgrid/mail");
-const { createShortLivedToken, createLongLivedToken } = require("../../utils");
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const sgMail = require('@sendgrid/mail')
+const { createShortLivedToken, createLongLivedToken } = require('../../utils')
+const { PRISMA_ENDPOINT, APP_URL } = require('../../config')
 
 const auth = {
   async signup(parent, { shortLivedToken }, ctx, info) {
     const [user] = await ctx.db.query.users({
       where: {
-        shortLivedToken
-      }
-    });
+        shortLivedToken,
+      },
+    })
 
-    const longLivedToken = await createLongLivedToken(shortLivedToken);
+    const longLivedToken = await createLongLivedToken(shortLivedToken)
     if (!user || !longLivedToken) {
-      throw new Error(`Token is expired or invalid`);
+      throw new Error(`Token is expired or invalid`)
     }
 
     // if (!user) {
@@ -25,50 +26,49 @@ const auth = {
 
     const updatedUser = await ctx.db.mutation.updateUser({
       where: { email: user.email },
-      data: { shortLivedToken: null }
-    });
+      data: { shortLivedToken: null },
+    })
 
     return {
       token: longLivedToken,
-      user
-    };
+      user,
+    }
   },
 
   async sendShortLivedToken(parent, { email }, ctx, info) {
-    let user;
-    const userExist = await ctx.db.query.user({ where: { email } });
+    let user
+    const userExist = await ctx.db.query.user({ where: { email } })
     if (userExist) {
-      user = userExist;
+      user = userExist
     } else {
       user = await ctx.db.mutation.createUser({
-        data: { email }
-      });
+        data: { email },
+      })
     }
-    const shortLivedToken = await createShortLivedToken(user);
+    const shortLivedToken = await createShortLivedToken(user)
     const updatedUser = await ctx.db.mutation.updateUser({
       where: { email },
-      data: { shortLivedToken }
-    });
+      data: { shortLivedToken },
+    })
     // console.log(updatedUser);
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY)
     const msg = {
       to: user.email,
-      from: "ecomm-demo@example.com",
-      subject: "Your Sign in Token is here!",
-      text: "Your Sign in Token is here!",
+      from: 'ecomm-demo@example.com',
+      subject: 'Your Sign in Token is here!',
+      text: 'Your Sign in Token is here!',
       html: `Your Sign in Token is here!
       \n\n
-      <a href="${
-        process.env.APP_URL
-      }/token/${shortLivedToken}">Click Here to sign in</a>`
-    };
-    sgMail.send(msg);
+      <a href="${process.env.APP_URL ||
+        APP_URL}/token/${shortLivedToken}">Click Here to sign in</a>`,
+    }
+    sgMail.send(msg)
 
-    return { message: "Thanks!" };
-  }
-};
+    return { message: 'Thanks!' }
+  },
+}
 
-module.exports = { auth };
+module.exports = { auth }
 
 // throw new Error(`No such user for email ${args.email}`);
 // const user = await ctx.db.mutation.createUser({
