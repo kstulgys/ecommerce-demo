@@ -1,5 +1,5 @@
-# source: https://us1.prisma.sh/karolis-stulgys-9eb3b5/ecommerce-demo-database/dev
-# timestamp: Fri Oct 26 2018 10:56:51 GMT+1100 (AUS Eastern Daylight Time)
+# source: https://ecommerce-prod-19bfeff3b1.herokuapp.com/ecomm-prisma-prod/prod
+# timestamp: Tue Nov 06 2018 17:10:02 GMT+1100 (AUS Eastern Daylight Time)
 
 type AggregateCartItem {
   count: Int!
@@ -129,7 +129,7 @@ input CartItemUpdateInput {
   user: UserUpdateOneRequiredWithoutCartInput
 }
 
-input CartItemUpdateManyInput {
+input CartItemUpdateManyMutationInput {
   quantity: Int
 }
 
@@ -384,7 +384,7 @@ input ItemUpdateInput {
   user: UserUpdateOneRequiredWithoutItemsInput
 }
 
-input ItemUpdateManyInput {
+input ItemUpdateManyMutationInput {
   title: String
   description: String
   image: String
@@ -743,11 +743,11 @@ type Mutation {
   upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
   upsertOrderItem(where: OrderItemWhereUniqueInput!, create: OrderItemCreateInput!, update: OrderItemUpdateInput!): OrderItem!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyCartItems(data: CartItemUpdateManyInput!, where: CartItemWhereInput): BatchPayload!
-  updateManyOrders(data: OrderUpdateManyInput!, where: OrderWhereInput): BatchPayload!
-  updateManyItems(data: ItemUpdateManyInput!, where: ItemWhereInput): BatchPayload!
-  updateManyOrderItems(data: OrderItemUpdateManyInput!, where: OrderItemWhereInput): BatchPayload!
-  updateManyUsers(data: UserUpdateManyInput!, where: UserWhereInput): BatchPayload!
+  updateManyCartItems(data: CartItemUpdateManyMutationInput!, where: CartItemWhereInput): BatchPayload!
+  updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
+  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  updateManyOrderItems(data: OrderItemUpdateManyMutationInput!, where: OrderItemWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyCartItems(where: CartItemWhereInput): BatchPayload!
   deleteManyOrders(where: OrderWhereInput): BatchPayload!
   deleteManyItems(where: ItemWhereInput): BatchPayload!
@@ -959,6 +959,15 @@ input OrderItemUpdateManyInput {
   delete: [OrderItemWhereUniqueInput!]
   update: [OrderItemUpdateWithWhereUniqueNestedInput!]
   upsert: [OrderItemUpsertWithWhereUniqueNestedInput!]
+}
+
+input OrderItemUpdateManyMutationInput {
+  title: String
+  description: String
+  image: String
+  largeImage: String
+  price: Int
+  quantity: Int
 }
 
 input OrderItemUpdateManyWithoutUserInput {
@@ -1328,7 +1337,7 @@ input OrderUpdateInput {
   user: UserUpdateOneRequiredInput
 }
 
-input OrderUpdateManyInput {
+input OrderUpdateManyMutationInput {
   total: Int
   charge: String
 }
@@ -1696,7 +1705,7 @@ input UserUpdateInput {
   items: ItemUpdateManyWithoutUserInput
 }
 
-input UserUpdateManyInput {
+input UserUpdateManyMutationInput {
   email: String
   shortLivedToken: String
 }
