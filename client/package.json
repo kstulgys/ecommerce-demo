@@ -40,10 +40,11 @@
     "react-test-renderer": "^16.6.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start -p $PORT",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "browserslist": [
     ">0.2%",
