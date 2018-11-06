@@ -1,15 +1,15 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken')
 
 function getUserId(ctx) {
-  const Authorization = ctx.request.get("Authorization");
+  const Authorization = ctx.request.get('Authorization')
   if (Authorization) {
-    const token = Authorization.replace("Bearer ", "");
-    const { userId } = jwt.verify(token, process.env.APP_SECRET);
-    return userId;
+    const token = Authorization.replace('Bearer ', '')
+    const { userId } = jwt.verify(token, process.env.APP_SECRET)
+    return userId
   }
 
   // throw new Error(`Not authorized`);
-  return null;
+  return null
 }
 
 // class AuthError extends Error {
@@ -20,22 +20,22 @@ function getUserId(ctx) {
 
 const createShortLivedToken = ({ id }) => {
   return jwt.sign({ id }, process.env.APP_SECRET, {
-    expiresIn: "1h"
-  });
-};
+    expiresIn: '1h',
+  })
+}
 
 const createLongLivedToken = token => {
-  const { id } = jwt.verify(token, process.env.APP_SECRET);
+  const { id } = jwt.verify(token, process.env.APP_SECRET)
   return jwt.sign({ userId: id }, process.env.APP_SECRET, {
-    expiresIn: "30 days"
-  });
-};
+    expiresIn: '30 days',
+  })
+}
 
 module.exports = {
   createShortLivedToken,
   createLongLivedToken,
-  getUserId
-};
+  getUserId,
+}
 
 // const verify = token => {
 //   try {
@@ -69,3 +69,4 @@ module.exports = {
 //   const id = uuid();
 //   return { id, email };
 // };
+// "start": "nodemon -e js,graphql -x node -r dotenv/config src/index.js",
