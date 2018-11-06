@@ -1,6 +1,6 @@
 # The endpoint of your Prisma API (deployed to a Prisma Sandbox).
-# endpoint: ${env:PRISMA_ENDPOINT}
-endpoint: https://ecommerce-prod-19bfeff3b1.herokuapp.com/ecomm-prisma-prod/prod
+endpoint: ${env:PRISMA_ENDPOINT}
+# endpoint: https://ecommerce-prod-19bfeff3b1.herokuapp.com/ecomm-prisma-prod/prod
 
 # The file containing the definition of your data model.
 datamodel: datamodel.graphql
