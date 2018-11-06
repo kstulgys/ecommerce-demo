@@ -1,5 +1,5 @@
 const APP_URL = `https://ecomm-client-prod.herokuapp.com`
-const PRISMA_ENDPOINT = `https://ecomm-prisma-prod.herokuapp.com`
+const PRISMA_ENDPOINT = `https://ecommerce-prod-19bfeff3b1.herokuapp.com/ecomm-prisma-prod/prod?headers={"Authorization":"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NDE1NzA1MjEsIm5iZiI6MTU0MTQ4NDEyMX0.AtepRWLIG919nLFvexXuDFsfXPBBj_OKUV3G90AVPZY"}`
 
 module.exports = { PRISMA_ENDPOINT, APP_URL }
 
