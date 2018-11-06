@@ -40,7 +40,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      Authorization: `Bearer ${localStorage.getItem(AUTH_TOKEN)}`,
+      Authorization: `Bearer ${tokenValue}`,
     },
   },
 })
