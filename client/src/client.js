@@ -5,7 +5,7 @@ import { getMainDefinition } from 'apollo-utilities'
 import { AUTH_TOKEN } from './utils/constants'
 import { withClientState } from 'apollo-link-state'
 import { resolvers, defaults } from './resolvers'
-import { endpoint, prodEndpoint } from './clientConfig'
+import { endpoint, prodEndpoint } from './config'
 
 // uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
 
