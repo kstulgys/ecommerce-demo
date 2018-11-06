@@ -18,7 +18,7 @@ const httpLink = new HttpLink({
 
 const middlewareLink = new ApolloLink((operation, forward) => {
   // get the authentication token from local storage if it exists
-  const tokenValue = localStorage.getItem(AUTH_TOKEN) || 'unAuthenticated'
+  const tokenValue = localStorage.getItem(AUTH_TOKEN)
   // console.log('the token', tokenValue)
   // return the headers to the context so httpLink can read them
   operation.setContext({
@@ -40,7 +40,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      Authorization: `Bearer ${tokenValue}`,
+      Authorization: tokenValue ? `Bearer ${tokenValue}` : '',
     },
   },
 })
