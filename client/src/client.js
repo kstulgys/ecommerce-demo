@@ -18,7 +18,7 @@ const httpLink = new HttpLink({
 
 const middlewareLink = new ApolloLink((operation, forward) => {
   // get the authentication token from local storage if it exists
-  const tokenValue = localStorage.getItem(AUTH_TOKEN)
+  const tokenValue = localStorage.getItem(AUTH_TOKEN) || 'unAuthenticated'
   // console.log('the token', tokenValue)
   // return the headers to the context so httpLink can read them
   operation.setContext({
