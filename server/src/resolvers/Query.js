@@ -1,28 +1,28 @@
-const { forwardTo } = require("prisma-binding");
-const { getUserId } = require("../utils");
+const { forwardTo } = require('prisma-binding')
+const { getUserId } = require('../utils')
 
 const Query = {
-  items: forwardTo("db"),
-  item: forwardTo("db"),
-  itemsConnection: forwardTo("db"),
+  items: forwardTo('db'),
+  item: forwardTo('db'),
+  itemsConnection: forwardTo('db'),
 
   me(parent, args, ctx, info) {
-    const id = getUserId(ctx);
-    if (!id) return null;
-    return ctx.db.query.user({ where: { id } }, info);
+    const id = getUserId(ctx)
+    if (!id) return null
+    return ctx.db.query.user({ where: { id } }, info)
   },
   async order(parent, args, ctx, info) {
     // 1. Make sure they are logged in
-    const userId = getUserId(ctx);
+    const userId = getUserId(ctx)
     if (!userId)
-      throw new Error("You must be signed in to complete this order.");
+      throw new Error('You must be signed in to complete this order.')
     // 2. Query the current order
     const order = await ctx.db.query.order(
       {
-        where: { id: args.id }
+        where: { id: args.id },
       },
-      info
-    );
+      info,
+    )
     // 3. Check if the have the permissions to see this order
     // const ownsOrder = order.user.id === ctx.request.userId;
     // const hasPermissionToSeeOrder = ctx.request.user.permissions.includes(
@@ -32,21 +32,21 @@ const Query = {
     //   throw new Error("You cant see this buddd");
     // }
     // 4. Return the order
-    return order;
+    return order
   },
   async orders(parent, args, ctx, info) {
-    const userId = getUserId(ctx);
+    const userId = getUserId(ctx)
     if (!userId)
-      throw new Error("You must be signed in to complete this order.");
+      throw new Error('You must be signed in to complete this order.')
     return ctx.db.query.orders(
       {
         where: {
-          user: { id: userId }
-        }
+          user: { id: userId },
+        },
       },
-      info
-    );
-  }
+      info,
+    )
+  },
 
   //   async infiniteScrollItems(
   //     parent,
@@ -83,6 +83,6 @@ const Query = {
 
   // return item;
   // }
-};
+}
 
-module.exports = { Query };
+module.exports = { Query }

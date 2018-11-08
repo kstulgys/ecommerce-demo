@@ -1,6 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { NavLink, Link, BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import {
+  NavLink,
+  Link,
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom'
 import { ApolloProvider } from 'react-apollo'
 import client from './client'
 import NavBar from './components/navigation/NavBar'
@@ -17,26 +24,26 @@ import 'tachyons'
 
 // <ModalConductor />
 function App() {
-	return (
-		<div className="App">
-			<Router>
-				<>
-					<NavBar />
-					<SearchField />
-					<Switch>
-						<Route exact path="/" component={ItemList} />
-						<Route exact path="/token/:token" component={SignUp} />
-					</Switch>
-				</>
-			</Router>
-		</div>
-	)
+  return (
+    <div className="App">
+      <Router>
+        <>
+          <NavBar />
+          <SearchField />
+          <Switch>
+            <Route exact path="/" component={ItemList} />
+            <Route exact path="/token/:token" component={SignUp} />
+          </Switch>
+        </>
+      </Router>
+    </div>
+  )
 }
 
 const rootElement = document.getElementById('root')
 ReactDOM.render(
-	<ApolloProvider client={client}>
-		<App />
-	</ApolloProvider>,
-	rootElement
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+  rootElement,
 )
