@@ -1,8 +1,7 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const sgMail = require('@sendgrid/mail')
 const { createShortLivedToken, createLongLivedToken } = require('../../utils')
 const { PRISMA_ENDPOINT, APP_URL } = require('../../config')
+// require('dotenv').config({ path: '.env' })
 
 const auth = {
   async signup(parent, { shortLivedToken }, ctx, info) {
@@ -16,13 +15,6 @@ const auth = {
     if (!user || !longLivedToken) {
       throw new Error(`Token is expired or invalid`)
     }
-
-    // if (!user) {
-    //   throw new Error(`No user found`);
-    // }
-    // if (!longLivedToken) {
-    //   throw new Error(`This token is expired or invalid`);
-    // }
 
     const updatedUser = await ctx.db.mutation.updateUser({
       where: { email: user.email },
@@ -45,8 +37,9 @@ const auth = {
         data: { email },
       })
     }
+    // console.log('USSSSSSER', process.env.SENDGRID_API_KEY)
     const shortLivedToken = await createShortLivedToken(user)
-    const updatedUser = await ctx.db.mutation.updateUser({
+    await ctx.db.mutation.updateUser({
       where: { email },
       data: { shortLivedToken },
     })

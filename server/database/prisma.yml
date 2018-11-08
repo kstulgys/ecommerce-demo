@@ -1,21 +1,12 @@
-# The endpoint of your Prisma API (deployed to a Prisma Sandbox).
-# endpoint: ${env:PRISMA_ENDPOINT}
-endpoint: https://ecommerce-prod-19bfeff3b1.herokuapp.com/ecomm-prisma-prod/prod
-
-# The file containing the definition of your data model.
+endpoint: ${env:PRISMA_ENDPOINT}
+# endpoint: https://ecommerce-prod-19bfeff3b1.herokuapp.com/ecomm-prisma-prod/prod
+# endpoint: https://us1.prisma.sh/karolis-stulgys-9eb3b5/ecommerce-demo-database/dev
+secret: ${env:PRISMA_SECRET}
 datamodel: datamodel.graphql
 
-# Seed your service with initial data based on `seed.graphql`.
-# seed:
-#   import: seed.graphql
-
-# Download the GraphQL schema of the Prisma API into
-# `src/generated/prisma.graphql` (as specfied in `.graphqlconfig.yml`).
 hooks:
   post-deploy:
-    - graphql get-schema --project database
-
-# If specified, the `secret` must be used to generate a JWT which is attached
-# to the `Authorization` header of HTTP requests made against the Prisma API.
-# Info: https://www.prisma.io/docs/reference/prisma-api/concepts-utee3eiquo#authentication
-secret: ${env:PRISMA_SECRET}
+    - graphql get-schema -p database
+  # If specified, the `secret` must be used to generate a JWT which is attached
+  # to the `Authorization` header of HTTP requests made against the Prisma API.
+  # Info: https://www.prisma.io/docs/reference/prisma-api/concepts-utee3eiquo#authentication

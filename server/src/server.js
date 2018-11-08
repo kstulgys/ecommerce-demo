@@ -1,13 +1,14 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
 const resolvers = require('./resolvers')
-const { PRISMA_ENDPOINT } = require('./config')
+// const { PRISMA_ENDPOINT } = require('./config')
+require('dotenv').config({ path: '.env' })
 
 const db = new Prisma({
-  typeDefs: 'src/generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
-  endpoint: process.env.PRISMA_ENDPOINT || PRISMA_ENDPOINT, // the endpoint of the Prisma API (value set in `.env`)
-  debug: true, // log all GraphQL queries & mutations sent to the Prisma API
-  // secret: process.env.PRISMA_SECRET, // only needed if specified in `database/prisma.yml` (value set in `.env`)
+  typeDefs: 'src/generated/prisma.graphql',
+  endpoint: process.env.PRISMA_ENDPOINT,
+  debug: process.env.NODE_ENV === 'development' ? true : false,
+  secret: process.env.PRISMA_SECRET,
 })
 
 const server = new GraphQLServer({
