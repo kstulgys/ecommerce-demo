@@ -1,6 +1,6 @@
 const sgMail = require('@sendgrid/mail')
 const { createShortLivedToken, createLongLivedToken } = require('../../utils')
-const { PRISMA_ENDPOINT, APP_URL } = require('../../config')
+// const { PRISMA_ENDPOINT, APP_URL } = require('../../config')
 // require('dotenv').config({ path: '.env' })
 
 const auth = {
@@ -52,8 +52,9 @@ const auth = {
       text: 'Your Sign in Token is here!',
       html: `Your Sign in Token is here!
       \n\n
-      <a href="${process.env.APP_URL ||
-        APP_URL}/token/${shortLivedToken}">Click Here to sign in</a>`,
+      <a href="${
+        process.env.APP_URL
+      }/token/${shortLivedToken}">Click Here to sign in</a>`,
     }
     sgMail.send(msg)
 
