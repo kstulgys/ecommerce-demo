@@ -1,4 +1,3 @@
-const APP_URL = `https://ecomm-client-prod.herokuapp.com`
+// const APP_URL = `https://ecomm-client-prod.herokuapp.com`
 
-module.exports = { APP_URL }
-
+// module.exports = { APP_URL }
