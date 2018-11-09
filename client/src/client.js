@@ -10,10 +10,7 @@ import { endpoint, prodEndpoint } from './config'
 const tokenValue = localStorage.getItem(AUTH_TOKEN)
 
 const httpLink = new HttpLink({
-  uri:
-    process.env.NODE_ENV === 'development'
-      ? `http://${endpoint}`
-      : `http://${prodEndpoint}`,
+  uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
   headers: {
     Authorization: tokenValue ? `Bearer ${tokenValue}` : '',
   },
@@ -30,6 +27,7 @@ const client = new ApolloClient({
 })
 
 export default client
+// git subtree push --prefix client heroku-frontend master
 
 // const middlewareLink = new ApolloLink((operation, forward) => {
 //   // get the authentication token from local storage if it exists
