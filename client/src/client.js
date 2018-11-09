@@ -2,10 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-client-preset'
 import { ApolloLink, split } from 'apollo-link'
 import { withClientState } from 'apollo-link-state'
 import { resolvers, defaults } from './resolvers'
-import { endpoint, prodEndpoint } from './config'
 import { AUTH_TOKEN } from './utils/constants'
-import { WebSocketLink } from 'apollo-link-ws'
-import { getMainDefinition } from 'apollo-utilities'
 
 const tokenValue = localStorage.getItem(AUTH_TOKEN)
 
