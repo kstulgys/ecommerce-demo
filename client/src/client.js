@@ -1,7 +1,5 @@
-import { ApolloClient } from 'apollo-client'
-import { HttpLink } from 'apollo-link-http'
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-client-preset'
 import { ApolloLink, split } from 'apollo-link'
-import { InMemoryCache } from 'apollo-cache-inmemory'
 import { withClientState } from 'apollo-link-state'
 import { resolvers, defaults } from './resolvers'
 import { endpoint, prodEndpoint } from './config'
