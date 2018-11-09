@@ -1,11 +1,13 @@
-import { HttpLink, InMemoryCache, ApolloClient } from 'apollo-client-preset'
-import { WebSocketLink } from 'apollo-link-ws'
+import { ApolloClient } from 'apollo-client'
+import { HttpLink } from 'apollo-link-http'
 import { ApolloLink, split } from 'apollo-link'
-import { getMainDefinition } from 'apollo-utilities'
-import { AUTH_TOKEN } from './utils/constants'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import { withClientState } from 'apollo-link-state'
 import { resolvers, defaults } from './resolvers'
 import { endpoint, prodEndpoint } from './config'
+import { AUTH_TOKEN } from './utils/constants'
+import { WebSocketLink } from 'apollo-link-ws'
+import { getMainDefinition } from 'apollo-utilities'
 
 const tokenValue = localStorage.getItem(AUTH_TOKEN)
 
