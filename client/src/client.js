@@ -12,7 +12,7 @@ import { getMainDefinition } from 'apollo-utilities'
 const tokenValue = localStorage.getItem(AUTH_TOKEN)
 
 const httpLink = new HttpLink({
-  uri: prodEndpoint,
+  uri: process.env.ENDPOINT,
   headers: {
     Authorization: tokenValue ? `Bearer ${tokenValue}` : '',
   },
