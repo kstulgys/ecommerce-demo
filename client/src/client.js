@@ -3,7 +3,6 @@ import { ApolloLink, split } from 'apollo-link'
 import { withClientState } from 'apollo-link-state'
 import { resolvers, defaults } from './resolvers'
 import { AUTH_TOKEN } from './utils/constants'
-require('dotenv').config({ path: '.env' })
 
 const tokenValue = localStorage.getItem(AUTH_TOKEN)
 // console.log(process.env.ENDPOINT)
