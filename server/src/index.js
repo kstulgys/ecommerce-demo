@@ -7,6 +7,7 @@ const options = {
   playground: '/playground',
 }
 
+//start it!
 server.start(options, ({ port }) =>
   console.log(
     `Server started, listening on port ${port} for incoming requests.`,
@@ -15,5 +16,4 @@ server.start(options, ({ port }) =>
 
 // const { PRISMA_ENDPOINT, APP_URL } = require('./config')
 // const options = { port: 4000 }
-//start it!
 // server.start(() => console.log('Server is running...'))
