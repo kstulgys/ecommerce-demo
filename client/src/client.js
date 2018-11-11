@@ -7,7 +7,7 @@ import { AUTH_TOKEN } from './utils/constants'
 const tokenValue = localStorage.getItem(AUTH_TOKEN)
 // console.log(process.env.ENDPOINT)
 const httpLink = new HttpLink({
-  uri: process.env.ENDPOINT || 'http://localhost:8000/graphql',
+  uri: process.env.ENDPOINT || 'http://localhost:8000',
   headers: {
     Authorization: tokenValue ? `Bearer ${tokenValue}` : '',
   },
