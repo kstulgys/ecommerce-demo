@@ -8,9 +8,7 @@ const options = {
   subscriptions: '/subscriptions',
   playground: '/playground',
 }
-server.start(options, () =>
-  console.log('Server is running on localhost:' + options.port),
-)
+server.start(options, () => console.log('Server is running...'))
 
 // const { PRISMA_ENDPOINT, APP_URL } = require('./config')
 // const options = { port: 4000 }
