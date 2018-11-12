@@ -4,11 +4,12 @@ import { withClientState } from 'apollo-link-state'
 import { resolvers, defaults } from './resolvers'
 import { AUTH_TOKEN } from './utils/constants'
 import { createHttpLink } from 'apollo-link-http'
+import { endpoint, prodEndpoint } from './config'
 
 const tokenValue = localStorage.getItem(AUTH_TOKEN)
 // console.log(process.env.ENDPOINT)
 const httpLink = new createHttpLink({
-  uri: process.env.ENDPOINT || 'http://localhost:4000',
+  uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
   headers: {
     Authorization: tokenValue ? `Bearer ${tokenValue}` : '',
   },
