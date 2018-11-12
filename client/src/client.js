@@ -1,13 +1,14 @@
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-client-preset'
+import { ApolloClient, InMemoryCache } from 'apollo-client-preset'
 import { ApolloLink, split } from 'apollo-link'
 import { withClientState } from 'apollo-link-state'
 import { resolvers, defaults } from './resolvers'
 import { AUTH_TOKEN } from './utils/constants'
+import { createHttpLink } from 'apollo-link-http'
 
 const tokenValue = localStorage.getItem(AUTH_TOKEN)
 // console.log(process.env.ENDPOINT)
-const httpLink = new HttpLink({
-  uri: process.env.ENDPOINT || 'http://localhost:8000',
+const httpLink = new createHttpLink({
+  uri: process.env.ENDPOINT || 'http://localhost:4000',
   headers: {
     Authorization: tokenValue ? `Bearer ${tokenValue}` : '',
   },
