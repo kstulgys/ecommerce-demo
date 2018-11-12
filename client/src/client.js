@@ -8,8 +8,11 @@ import { endpoint, prodEndpoint } from './config'
 
 const tokenValue = localStorage.getItem(AUTH_TOKEN)
 // console.log(process.env.ENDPOINT)
+
+// uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
+
 const httpLink = new createHttpLink({
-  uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
+  uri: `https://ecomm-yoga-prod.herokuapp.com`,
   headers: {
     Authorization: tokenValue ? `Bearer ${tokenValue}` : '',
   },
