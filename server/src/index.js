@@ -1,14 +1,24 @@
 const { server } = require('./server')
+require('dotenv').config({ path: '.env' })
 
 //start it!
 
-const options = {
-  port: 8000,
-  endpoint: '/graphql',
-  subscriptions: '/subscriptions',
-  playground: '/playground',
-}
-server.start(() => console.log('Server is running...'))
+server.start(
+  {
+    cors: {
+      credentials: true,
+      origin: process.env.APP_URL,
+    },
+  },
+  deeds => console.log(`Server is running... ${deeds.port}`),
+)
+
+// const options = {
+//   port: 8000,
+//   endpoint: '/graphql',
+//   subscriptions: '/subscriptions',
+//   playground: '/playground',
+// }
 
 // "dev": "npm-run-all --parallel start playground",
 // const { PRISMA_ENDPOINT, APP_URL } = require('./config')
