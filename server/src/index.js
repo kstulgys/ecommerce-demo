@@ -8,7 +8,7 @@ const options = {
   subscriptions: '/subscriptions',
   playground: '/playground',
 }
-server.start(options, () => console.log('Server is running...'))
+server.start(() => console.log('Server is running...'))
 
 // "dev": "npm-run-all --parallel start playground",
 // const { PRISMA_ENDPOINT, APP_URL } = require('./config')
